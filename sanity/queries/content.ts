@@ -1,0 +1,2 @@
+export const featuredContentQuery = `{ "research": *[_type == "researchItem" && featured == true] | order(order asc)[0...3], "projects": *[_type == "project" && featured == true] | order(order asc)[0...4], "posts": *[_type == "blogPost" && publishedAt <= now()] | order(publishedAt desc)[0...6] }`;
+export const searchQuery = `*[_type in ["researchItem","project","publication","blogPost","resource"] && [title, summary] match $term]{_type,title,"slug":slug.current,summary}`;
