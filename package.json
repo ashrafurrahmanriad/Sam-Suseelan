@@ -14,7 +14,11 @@
     "db:generate": "drizzle-kit generate",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
-    "check": "npm run lint && npm run typecheck && node --test tests/unit.test.mjs"
+    "check": "npm run lint && npm run typecheck && node --test tests/unit.test.mjs",
+    "dev:vinext": "vinext dev --port 3001",
+    "build:vinext": "vinext build",
+    "start:vinext": "vinext start",
+    "deploy:vinext": "vinext-cloudflare deploy --config dist/server/wrangler.json --experimental-warm-cdn-cache"
   },
   "dependencies": {
     "drizzle-orm": "0.45.2",
