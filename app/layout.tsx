@@ -6,19 +6,19 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_SITE_URL || "https://samsuseelan.ai",
   ),
   title: {
-    default: "Sam Suseelan — Independent Researcher | AI & Aviation",
-    template: "%s — Sam Suseelan",
+    default: "Ashrafproject | Sam Suseelan — AI & Aviation",
+    template: "%s — Ashrafproject",
   },
   description:
     "Independent research in aviation AI, predictive maintenance, cybersecurity, sustainability and explainable intelligent systems.",
-  applicationName: "Sam Suseelan Research Lab",
+  applicationName: "Ashrafproject",
   authors: [{ name: "Sam Suseelan" }],
   openGraph: {
-    title: "Sam Suseelan — Independent Researcher | AI & Aviation",
+    title: "Ashrafproject | Sam Suseelan — AI & Aviation",
     description:
       "Research at the intersection of artificial intelligence, aviation safety, resilience and sustainable operations.",
     type: "website",
-    siteName: "Sam Suseelan",
+    siteName: "Ashrafproject",
     images: [
       {
         url: "/og.png",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sam Suseelan — Independent Researcher | AI & Aviation",
+    title: "Ashrafproject | Sam Suseelan — AI & Aviation",
     description: "Aviation AI research, publications and practical field notes.",
     images: ["/og.png"],
   },
