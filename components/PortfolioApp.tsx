@@ -8,11 +8,11 @@ const icon = (name: string) =>
     "Artificial Intelligence": "✦",
     "Machine Learning": "⌁",
     "Deep Learning": "◉",
-    "Generative AI": "✺",
-    "Natural Language Processing": "¶",
-    "Computer Vision": "◎",
+    "Aviation Analytics": "⌁",
+    "Predictive Maintenance": "◉",
+    "Aviation Cybersecurity": "⌾",
     "Explainable AI": "◇",
-    MLOps: "↻",
+    "AI Safety": "△",
   })[name] || "•";
 const hrefFor = (label: string) =>
   `/${label.toLowerCase().replaceAll(" ", "-")}`;
@@ -161,26 +161,26 @@ function Home() {
       <section className="container hero">
         <div>
           <div className="eyebrow">
-            <span className="dot" /> Open to AI Research, PhD & Collaboration
+            <span className="dot" /> Independent Researcher · Florida, USA
           </div>
           <h1>
-            <span className="gradient">AI Researcher</span> &<br />
-            Machine Learning Engineer
+            <span className="gradient">Intelligence for</span>
+            <br />safer aviation.
           </h1>
           <p className="lead">
-            Researching and building intelligent systems through artificial
-            intelligence, machine learning, deep learning, data and modern
-            software engineering.
+            I’m Sam Suseelan, an independent researcher investigating how
+            artificial intelligence can improve aircraft reliability,
+            navigation resilience, operational efficiency and sustainability.
           </p>
           <div className="cta-row">
             <a className="btn primary" href="/projects">
-              Explore My Work →
+              Explore research →
             </a>
             <a className="btn" href="/blog">
-              Read AI Insights
+              Read field notes
             </a>
-            <a className="btn" href="/cv">
-              Download CV ↓
+            <a className="btn" href="/publications">
+              View publications
             </a>
           </div>
         </div>
@@ -189,16 +189,16 @@ function Home() {
       <section className="section">
         <div className="container">
           <SectionHead
-            kicker="Research profile"
-            title="A connected practice"
-            copy="From research questions to reliable systems, each area connects rigorous inquiry with practical engineering."
+            kicker="Research programme"
+            title="Four connected flight paths"
+            copy="Applied research spanning aircraft health, cyber resilience, sustainable operations and explainable decision support."
           />
           <div className="grid four">
             {[
-              "Current Research Focus",
-              "Featured Work",
-              "Latest Publication",
-              "Latest Article",
+              "Aircraft health",
+              "Navigation resilience",
+              "Sustainable operations",
+              "Explainable systems",
             ].map((x, i) => (
               <div className="card" key={x}>
                 <span className="num">0{i + 1}</span>
@@ -206,10 +206,10 @@ function Home() {
                 <p>
                   {
                     [
-                      "Interpretable, robust and responsible intelligent systems.",
-                      "Sample explainable-vision pipeline and evaluation tooling.",
-                      "Demo publication records await verified CMS content.",
-                      "Practical notes on evaluation, reliability and deployment.",
+                      "Predicting maintenance needs before operational disruption.",
+                      "Detecting GNSS spoofing, interference and signal anomalies.",
+                      "Reducing fuel use, emissions and avoidable climate impact.",
+                      "Making safety-conscious AI decisions traceable to people.",
                     ][i]
                   }
                 </p>
@@ -230,8 +230,8 @@ function Home() {
         <div className="container">
           <SectionHead
             kicker="AI expertise"
-            title="Depth across the AI lifecycle"
-            copy="Eight interconnected disciplines, presented without inflated proficiency claims or unverified statistics."
+            title="Methods for real-world aviation questions"
+            copy="A cross-disciplinary toolkit connecting machine learning, aviation analytics, safety and responsible deployment."
           />
           <div className="grid four">
             {expertise.map((x, i) => (
@@ -243,14 +243,14 @@ function Home() {
                 <p>
                   {
                     [
-                      "Intelligent system design grounded in clear objectives.",
+                      "Intelligent systems grounded in operational objectives.",
                       "Reproducible learning pipelines and sound evaluation.",
-                      "Neural architectures, optimization and representation learning.",
-                      "Grounded, evaluated and responsibly deployed generative systems.",
-                      "Language understanding, retrieval and semantic systems.",
-                      "Visual perception with interpretable model behaviour.",
-                      "Methods that make model evidence useful to people.",
-                      "Reliable training, deployment, monitoring and governance.",
+                      "Neural architectures for complex aviation data.",
+                      "Decision support across flight and maintenance operations.",
+                      "Early-warning systems for aircraft component risk.",
+                      "Adaptive detection for connected aviation systems.",
+                      "Evidence people can inspect, challenge and trust.",
+                      "Responsible use in safety-conscious environments.",
                     ][i]
                   }
                 </p>
@@ -266,36 +266,37 @@ function Home() {
       <Showcase
         kind="Research"
         kicker="Research directions"
-        title="Questions worth investigating"
+        title="Questions grounded in aviation"
       />
       <Showcase
         kind="Project"
         kicker="Selected engineering"
-        title="Ideas made operational"
+        title="Research concepts made tangible"
       />
       <Showcase
         kind="Publication"
         kicker="Scholarly archive"
-        title="Evidence, documented"
+        title="Published investigations"
       />
       <LabPreview />
       <Showcase
         kind="Article"
         kicker="The Intelligence Brief"
-        title="Latest field notes"
+        title="Daily research field notes"
       />
+      <Newsletter />
       <section className="section">
         <div className="container contact-grid">
           <div>
             <div className="kicker">Collaboration</div>
             <h2 style={{ marginTop: 12 }}>
-              Let’s build something intelligent.
+              Let’s investigate what comes next.
             </h2>
           </div>
           <div>
             <p className="lead">
-              Open to AI research, machine-learning projects, academic
-              collaboration and PhD opportunities.
+              Open to serious research conversations across aviation AI,
+              predictive maintenance, cybersecurity and sustainable operations.
             </p>
             <div className="cta-row">
               <a className="btn primary" href="/contact">
@@ -309,6 +310,44 @@ function Home() {
         </div>
       </section>
     </>
+  );
+}
+
+function Newsletter() {
+  const [message, setMessage] = useState("");
+  async function subscribe(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const email = String(new FormData(form).get("email") || "");
+    setMessage("Subscribing…");
+    const response = await fetch("/api/newsletter", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+    const result = (await response.json()) as { message: string };
+    setMessage(result.message);
+    if (response.ok) form.reset();
+  }
+  return (
+    <section className="section">
+      <div className="container newsletter">
+        <div>
+          <div className="kicker">Flight notes / Dispatch</div>
+          <h2>One useful idea at a time.</h2>
+          <p className="section-copy">
+            New research notes on aviation AI, safety, resilience and
+            sustainable operations—sent when there is something worth sharing.
+          </p>
+        </div>
+        <form onSubmit={subscribe} className="newsletter-form">
+          <label className="sr-only" htmlFor="newsletter-email">Email address</label>
+          <input id="newsletter-email" name="email" type="email" required placeholder="you@example.com" />
+          <button className="btn primary" type="submit">Join the dispatch</button>
+          <span className="status" aria-live="polite">{message}</span>
+        </form>
+      </div>
+    </section>
   );
 }
 
@@ -400,7 +439,7 @@ function Showcase({
         <SectionHead
           kicker={kicker}
           title={title}
-          copy="All records below are visibly marked demonstration content and are ready to be replaced with verified work through the CMS."
+          copy="A focused archive of applied aviation AI research, publications and practical field notes."
         />
         <div className={list.length === 4 ? "grid four" : "grid"}>
           {list.map((x) => (
@@ -409,7 +448,7 @@ function Showcase({
               href={`/${kind.toLowerCase()}/${x.slug}`}
               key={x.slug}
             >
-              <span className="demo">Demo content</span>
+              {x.status && <span className="demo">{x.status}</span>}
               <span className="num">{x.kind.toUpperCase()}</span>
               <h3>{x.title}</h3>
               <p>{x.excerpt}</p>
@@ -531,8 +570,8 @@ function Listing({ title, kind }: { title: string; kind?: string }) {
         <div className="kicker">Sam Suseelan / {title}</div>
         <h1>{title}</h1>
         <p className="lead">
-          A structured, searchable archive designed for verified content.
-          Current records are demonstration entries and clearly labelled.
+          A structured archive of research directions, published work and
+          ongoing technical writing. Incomplete metadata is clearly identified.
         </p>
         <div className="filters">
           <button className="filter">All</button>
@@ -549,7 +588,7 @@ function Listing({ title, kind }: { title: string; kind?: string }) {
               href={`/${x.kind.toLowerCase()}/${x.slug}`}
               key={x.slug}
             >
-              <span className="demo">Demo content</span>
+              {x.status && <span className="demo">{x.status}</span>}
               <span className="num">{x.kind}</span>
               <h3>{x.title}</h3>
               <p>{x.excerpt}</p>
@@ -565,7 +604,7 @@ function Listing({ title, kind }: { title: string; kind?: string }) {
           ))
         ) : (
           <div className="empty">
-            No verified entries yet. Add content in Sanity Studio.
+            No entries are available in this section yet.
           </div>
         )}
       </div>
@@ -614,7 +653,9 @@ function Detail({ item }: { item: (typeof items)[number] }) {
   return (
     <div className="container">
       <header className="page-head">
-        <div className="kicker">{item.kind} / Demo content</div>
+        <div className="kicker">
+          {item.kind} {item.status ? `/ ${item.status}` : ""}
+        </div>
         <h1>{item.title}</h1>
         <p className="lead">{item.excerpt}</p>
         <div className="tag-row">
@@ -635,18 +676,20 @@ function Detail({ item }: { item: (typeof items)[number] }) {
           ))}
         </aside>
         <article className="article">
-          <div className="callout">
-            <strong>Demo content disclosure.</strong> This record demonstrates
-            the publishing structure only. It does not represent a claimed
-            achievement, result, affiliation or publication by Sam Suseelan.
-          </div>
+          {item.status?.includes("pending") && (
+            <div className="callout">
+              <strong>Metadata note.</strong> Bibliographic details are pending
+              verification and have intentionally not been inferred.
+            </div>
+          )}
           {sections.map((s, i) => (
             <section id={s.toLowerCase().replaceAll(" ", "-")} key={s}>
               <h2>{s}</h2>
               <p>
-                {i === 0
-                  ? item.excerpt
-                  : "This editable section is ready for verified content in Sanity. It intentionally contains no invented results, institutions, employers, metrics or personal claims."}
+                {item.body?.[i] ||
+                  (i === 0
+                    ? item.excerpt
+                    : "This section will be expanded as verified research notes, methods and supporting sources become available. No unverified results or affiliations are presented.")}
               </p>
               {i === 2 && (
                 <ul>
@@ -729,8 +772,8 @@ function About() {
         <div className="kicker">About / Professional profile</div>
         <h1>Research with purpose. Engineering with evidence.</h1>
         <p className="lead">
-          This page is prepared for Sam’s verified introduction, mission,
-          research philosophy, current focus and PhD objectives.
+          Independent research at the intersection of artificial intelligence,
+          aviation safety, resilience and sustainable operations.
         </p>
       </header>
       <div className="content-layout">
@@ -742,8 +785,9 @@ function About() {
         </aside>
         <article className="article">
           <div className="callout">
-            Personal biography fields are intentionally neutral until verified
-            content is supplied through the CMS.
+            Sam’s work explores practical AI-driven approaches that can support
+            aircraft reliability, navigation resilience, safety and
+            environmental performance.
           </div>
           {[
             "Research philosophy",
@@ -757,8 +801,24 @@ function About() {
             <section id={x.toLowerCase().replaceAll(" ", "-")} key={x}>
               <h2>{x}</h2>
               <p>
-                Editable profile content. Add a factual, first-person statement
-                in Sanity Studio before publishing.
+                {
+                  {
+                    "Research philosophy":
+                      "Useful aviation AI begins with the operational problem, the quality of available evidence and the people responsible for the final decision.",
+                    "Personal mission":
+                      "Investigate responsible intelligent systems that make aviation safer, more resilient and more sustainable.",
+                    "Current focus":
+                      "Predictive maintenance, GNSS anomaly detection, aviation cybersecurity, fuel optimization, contrail avoidance and explainable AI.",
+                    "Long-term vision":
+                      "Help connect rigorous AI research with transparent, practical systems for real aviation environments.",
+                    "Professional values":
+                      "Evidence, reproducibility, clear limitations, safety-conscious design and respectful collaboration.",
+                    "Collaboration interests":
+                      "Academic research, peer discussion, technical writing and open projects in applied aviation intelligence.",
+                    "PhD objective":
+                      "Develop deeper research at the intersection of artificial intelligence, aviation systems and safety assurance.",
+                  }[x]
+                }
               </p>
             </section>
           ))}
@@ -874,8 +934,8 @@ function Footer() {
               <span>Sam Suseelan</span>
             </a>
             <p className="section-copy">
-              AI research, machine-learning engineering and practical
-              intelligence.
+              Independent research in artificial intelligence, aviation safety,
+              resilience and sustainable operations.
             </p>
           </div>
           <div>
@@ -888,11 +948,9 @@ function Footer() {
           </div>
           <div>
             <h3>More</h3>
-            {["Experience", "Education", "Skills", "Now"].map((n) => (
-              <a href={hrefFor(n)} key={n}>
-                {n}
-              </a>
-            ))}
+            <a href="https://dev.to/samsuseelan" rel="me">DEV Community</a>
+            <a href="https://independent.academia.edu/SamSuseelan" rel="me">Academia.edu</a>
+            <a href="/admin">Research CMS</a>
           </div>
           <div>
             <h3>Legal</h3>
@@ -905,7 +963,7 @@ function Footer() {
         </div>
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} Sam Suseelan</span>
-          <span>Designed as an intelligent digital research lab.</span>
+          <span>Independent Researcher · AI & Aviation · Florida, USA</span>
         </div>
       </div>
     </footer>

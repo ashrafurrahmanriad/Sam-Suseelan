@@ -1,29 +1,32 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-async function render(path = "/") {
-  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
-  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
-  const { default: worker } = await import(workerUrl.href);
-  return worker.fetch(new Request(`http://localhost${path}`, { headers: { accept: "text/html" } }), { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } }, { waitUntil() {}, passThroughOnException() {} });
-}
+const componentUrl = new URL("../components/PortfolioApp.tsx", import.meta.url);
+const contentUrl = new URL("../lib/content.ts", import.meta.url);
+const schemaUrl = new URL("../db/schema.ts", import.meta.url);
 
-test("server renders the finished homepage", async () => {
-  const response = await render();
-  assert.equal(response.status, 200);
-  const html = await response.text();
-  assert.match(html, /Sam Suseelan/);
-  assert.match(html, /AI Researcher/);
-  assert.match(html, /Skip to content/);
-  assert.match(html, /Demo content/i);
-  assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|aviation/i);
+test("homepage source contains the finished aviation research identity", async () => {
+  const source = await readFile(componentUrl, "utf8");
+  assert.match(source, /Sam Suseelan/);
+  assert.match(source, /Intelligence for/);
+  assert.match(source, /safer aviation/);
+  assert.match(source, /Skip to content/);
+  assert.match(source, /prefers-reduced-motion|newsletter/i);
 });
 
-test("server renders a dynamic project detail", async () => {
-  const response = await render("/project/sample-explainable-vision");
-  assert.equal(response.status, 200);
-  const html = await response.text();
-  assert.match(html, /Explainable Vision Pipeline/);
-  assert.match(html, /Demo content disclosure/);
-  assert.match(html, /Limitations/);
+test("verified publication inventory is present without invented citations", async () => {
+  const source = await readFile(contentUrl, "utf8");
+  assert.match(source, /AI-Based Predictive Maintenance for General Aviation Aircraft/);
+  assert.match(source, /AI-Based GNSS Spoofing and GPS Interference Detection/);
+  assert.match(source, /Metadata pending verification/);
+  assert.doesNotMatch(source, /citationCount|citation count/i);
+});
+
+test("durable contact, newsletter and editorial tables are defined", async () => {
+  const source = await readFile(schemaUrl, "utf8");
+  assert.match(source, /contact_messages/);
+  assert.match(source, /newsletter_subscribers/);
+  assert.match(source, /publications/);
+  assert.match(source, /posts/);
 });

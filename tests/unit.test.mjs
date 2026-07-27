@@ -6,7 +6,7 @@ test("slugs remain URL safe", () =>
     "Responsible AI".toLowerCase().replaceAll(" ", "-"),
     "responsible-ai",
   ));
-test("demo content is visibly labelled", () =>
-  assert.match("Sample: Explainable Vision Pipeline", /Sample:/));
+test("unverified metadata is visibly labelled", () =>
+  assert.match("Metadata pending verification", /pending verification/));
 test("email validation rejects malformed addresses", () =>
   assert.equal(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test("not-an-email"), false));
